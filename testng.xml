@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="MyTestSuites" verbose="1">
+  <test thread-count="1" name="Test">
+    <classes>
+      <class name="stepDefs.CucumberTestRunner"/>
+    </classes>
+	<!--<packages>
+		<package name="apiTests" />
+	</packages>-->
+  </test> <!-- Test -->
+  </suite>
