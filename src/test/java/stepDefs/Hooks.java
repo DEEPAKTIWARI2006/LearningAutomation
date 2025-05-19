@@ -19,17 +19,16 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import io.cucumber.java.After;
-import io.cucumber.java.AfterAll;
 import io.cucumber.java.AfterStep;
 import io.cucumber.java.Before;
 import io.cucumber.java.Scenario;
 import utilities.ConfigReader;
 import utilities.DriverManager;
-import utilities.MobileDriverManager;
 
 public class Hooks {
 
@@ -68,12 +67,16 @@ public class Hooks {
 				if (platform.equalsIgnoreCase("linux")) {
 					System.setProperty("webdriver.gecko.driver",
 							System.getProperty("user.dir") + "/src/test/resources/drivers/linux64/geckodriver");
+					FirefoxOptions options = new FirefoxOptions();
+					options.addArguments("--headless");
+			        driver = new FirefoxDriver(options);
 				}else {
 					System.setProperty("webdriver.gecko.driver",
 							System.getProperty("user.dir") + "/src/test/resources/drivers/geckodriver.exe");
+					driver = new FirefoxDriver();
 				}
 				
-				driver = new FirefoxDriver();
+				
 				break;
 
 			case "edge":
