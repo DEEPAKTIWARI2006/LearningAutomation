@@ -25,8 +25,8 @@ import utilities.PdfSummaryGenerator;
 @CucumberOptions(features = { "src/test/java/featurefiles" },
 		// dryRun = true,
 		monochrome = true, 
-		//tags = "@smoke or @regression or @androidChrome or @androidapp",
-		tags = "@androidChrome",
+		//tags = "@smoke or @regression or @androidChrome or @androidapp or @androidChrome",
+		tags = "@smoke or @regression",
 		glue = "stepDefs", plugin = { "pretty",
 				"html:target/cucumber/cucumber.html",
 				"com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter:" })
