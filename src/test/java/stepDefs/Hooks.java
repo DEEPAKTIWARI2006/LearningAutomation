@@ -45,15 +45,12 @@ public class Hooks {
 		browser = System.getProperty("browser");
 		platform = System.getProperty("platform");
 
-		if (browser == null) {
-			browser = ConfigReader.get("browser").toLowerCase();
-		}
-		
-		if (platform == null) {
-			platform = ConfigReader.get("platform").toLowerCase();
-		}
+		  if (browser == null) { browser = ConfigReader.get("browser").toLowerCase(); }  
+		  if (platform == null) { platform = ConfigReader.get("platform").toLowerCase(); }
+		 
 
 		logger.info("Starting tests with browser: {}", browser);
+		logger.info("Starting tests with Platform: {}", platform);
 
 		try {
 			switch (browser) {
@@ -69,14 +66,13 @@ public class Hooks {
 							System.getProperty("user.dir") + "/src/test/resources/drivers/linux64/geckodriver");
 					FirefoxOptions options = new FirefoxOptions();
 					options.addArguments("--headless");
-			        driver = new FirefoxDriver(options);
-				}else {
+					driver = new FirefoxDriver(options);
+				} else {
 					System.setProperty("webdriver.gecko.driver",
 							System.getProperty("user.dir") + "/src/test/resources/drivers/geckodriver.exe");
 					driver = new FirefoxDriver();
 				}
-				
-				
+
 				break;
 
 			case "edge":
@@ -87,22 +83,26 @@ public class Hooks {
 
 			case "android":
 				try {
-					String apkPath = System.getProperty("user.dir") + "/src/test/resources/apks/simple-clinic-demo-app.apk";
+					String apkPath = System.getProperty("user.dir")
+							+ "/src/test/resources/apks/simple-clinic-demo-app.apk";
 					DesiredCapabilities caps = new DesiredCapabilities();
 					caps.setCapability("platformName", "Android");
-					caps.setCapability("appium:chromedriverExecutable", System.getProperty("user.dir") + "/src/test/resources/drivers/ChromeV83/chromedriver.exe");
+					caps.setCapability("appium:chromedriverExecutable",
+							System.getProperty("user.dir") + "/src/test/resources/drivers/ChromeV83/chromedriver.exe");
 					caps.setCapability("appium:deviceName", "emulator-5554"); // or your real device name
 					caps.setCapability("appium:automationName", "UiAutomator2");
 					caps.setCapability("appium:browserName", "Chrome");
-					//caps.setCapability("appium:appActivity", "org.simple.clinic.setup.SetupActivity");
-					//caps.setCapability("appium:ensureWebviewsHavePages", true);
-					//caps.setCapability("appium:newCommandTimeout", 10);
-					//caps.setCapability("appium:nativeWebScreenshot", true);
-					//caps.setCapability("appium:app", apkPath);
-					//caps.setCapability("appium:chromedriverAutodownload", true);
-					//caps.setCapability("appium:chromedriver_autodownload", true);
+					// caps.setCapability("appium:appActivity",
+					// "org.simple.clinic.setup.SetupActivity");
+					// caps.setCapability("appium:ensureWebviewsHavePages", true);
+					// caps.setCapability("appium:newCommandTimeout", 10);
+					// caps.setCapability("appium:nativeWebScreenshot", true);
+					// caps.setCapability("appium:app", apkPath);
+					// caps.setCapability("appium:chromedriverAutodownload", true);
+					// caps.setCapability("appium:chromedriver_autodownload", true);
 
-					//mobiledriver = new AndroidDriver(URI.create("http://127.0.0.1:4723/").toURL(), caps);
+					// mobiledriver = new
+					// AndroidDriver(URI.create("http://127.0.0.1:4723/").toURL(), caps);
 					driver = new AndroidDriver(URI.create("http://127.0.0.1:4723/").toURL(), caps);
 					driver.get("https://www.screener.in");
 					Thread.sleep(2000);
@@ -118,9 +118,9 @@ public class Hooks {
 			default:
 				throw new RuntimeException("Unsupported Platform: " + browser);
 			}
-			
+
 			DriverManager.setDriver(driver);
-			
+
 			/*
 			 * if (browser == "android") { MobileDriverManager.setDriver(mobiledriver);
 			 * }else { DriverManager.setDriver(driver); }
@@ -158,27 +158,27 @@ public class Hooks {
 			File screenshotFile = null;
 			logger.error("Step failed: {}", scenario.getName());
 			WebDriver driver = DriverManager.getDriver();
-			//AppiumDriver mobiledriver = MobileDriverManager.getDriver();
-			
-			if(driver != null) {
+			// AppiumDriver mobiledriver = MobileDriverManager.getDriver();
+
+			if (driver != null) {
 				screenshotFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-			}else if(mobiledriver != null){
+			} else if (mobiledriver != null) {
 				screenshotFile = ((TakesScreenshot) mobiledriver).getScreenshotAs(OutputType.FILE);
 			}
-				
-				String screenshotName = "screenshot_" + System.currentTimeMillis() + ".png";
-				String screenshotPath = "target/extent-reports/screenshots/" + screenshotName;
-				new File("target/extent-reports/screenshots/").mkdirs();
-				try {
-					Files.copy(screenshotFile.toPath(), Paths.get(screenshotPath), StandardCopyOption.REPLACE_EXISTING);
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-				String relPath = "./screenshots/" + screenshotName;
-				String html = "<a href='" + relPath + "' target='_blank'>" + "<img src='" + relPath
-						+ "' height='200' /></a>";
 
-				scenario.log("Related snapshot link " + html);
+			String screenshotName = "screenshot_" + System.currentTimeMillis() + ".png";
+			String screenshotPath = "target/extent-reports/screenshots/" + screenshotName;
+			new File("target/extent-reports/screenshots/").mkdirs();
+			try {
+				Files.copy(screenshotFile.toPath(), Paths.get(screenshotPath), StandardCopyOption.REPLACE_EXISTING);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			String relPath = "./screenshots/" + screenshotName;
+			String html = "<a href='" + relPath + "' target='_blank'>" + "<img src='" + relPath
+					+ "' height='200' /></a>";
+
+			scenario.log("Related snapshot link " + html);
 
 		}
 	}
