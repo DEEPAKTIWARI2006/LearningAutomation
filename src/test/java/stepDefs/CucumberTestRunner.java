@@ -12,7 +12,6 @@ import io.cucumber.testng.AbstractTestNGCucumberTests;
 import io.cucumber.testng.CucumberOptions;
 import pages.LoginPage;
 import utilities.CombinedTagPdfReport;
-import utilities.ConvertExtentToPDF;
 
 @CucumberOptions(features = { "src/test/java/featurefiles" },
 		// dryRun = true,
@@ -41,7 +40,7 @@ public class CucumberTestRunner extends AbstractTestNGCucumberTests {
     public void generatePdfFromHtmlReport() {
         
         try {
-        	ConvertExtentToPDF.ConvertExtentToPDF();
+        	//ConvertExtentToPDF.ConvertExtentToPDF();
         	CombinedTagPdfReport.generate(Hooks.tagSummaryMap, "target/TestSummaryTabular.pdf");
         } catch (Exception e) {
             e.printStackTrace();
