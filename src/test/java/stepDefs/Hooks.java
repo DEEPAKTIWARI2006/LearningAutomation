@@ -49,6 +49,10 @@ public class Hooks {
 		if (browser == null) {
 			browser = ConfigReader.get("browser").toLowerCase();
 		}
+		
+		if (platform == null) {
+			platform = ConfigReader.get("platform").toLowerCase();
+		}
 
 		logger.info("Starting tests with browser: {}", browser);
 
@@ -61,7 +65,7 @@ public class Hooks {
 				break;
 
 			case "firefox":
-				if (platform== "linux") {
+				if (platform.equalsIgnoreCase("linux")) {
 					System.setProperty("webdriver.gecko.driver",
 							System.getProperty("user.dir") + "/src/test/resources/drivers/linux64/geckodriver");
 				}else {

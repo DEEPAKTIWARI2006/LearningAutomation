@@ -1,26 +1,18 @@
 package stepDefs;
 
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.Base64;
-import java.util.Optional;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.devtools.DevTools;
-import org.openqa.selenium.devtools.v134.page.Page;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeClass;
+
 import io.cucumber.testng.AbstractTestNGCucumberTests;
 import io.cucumber.testng.CucumberOptions;
 import pages.LoginPage;
-import utilities.ColoredTagWisePdfReport;
 import utilities.CombinedTagPdfReport;
 import utilities.ConvertExtentToPDF;
-import utilities.PdfSummaryGenerator;
 
 @CucumberOptions(features = { "src/test/java/featurefiles" },
 		// dryRun = true,
