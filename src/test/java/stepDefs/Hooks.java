@@ -36,6 +36,7 @@ public class Hooks {
 	private static final Logger logger = LogManager.getLogger(Hooks.class);
 	public static Map<String, List<String>> tagSummaryMap = new HashMap<>();
 	public static String browser;
+	public static String platform;
 	WebDriver driver = null;
 	AppiumDriver mobiledriver = null;
 
@@ -43,6 +44,7 @@ public class Hooks {
 	public void setUp(Scenario scenario) {
 
 		browser = System.getProperty("browser");
+		platform = System.getProperty("platform");
 
 		if (browser == null) {
 			browser = ConfigReader.get("browser").toLowerCase();
@@ -59,8 +61,14 @@ public class Hooks {
 				break;
 
 			case "firefox":
-				System.setProperty("webdriver.gecko.driver",
-						System.getProperty("user.dir") + "/src/test/resources/drivers/geckodriver.exe");
+				if (platform== "linux") {
+					System.setProperty("webdriver.gecko.driver",
+							System.getProperty("user.dir") + "/src/test/resources/drivers/linux64/geckodriver");
+				}else {
+					System.setProperty("webdriver.gecko.driver",
+							System.getProperty("user.dir") + "/src/test/resources/drivers/geckodriver.exe");
+				}
+				
 				driver = new FirefoxDriver();
 				break;
 
