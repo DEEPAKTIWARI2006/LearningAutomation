@@ -45,10 +45,6 @@ public class Hooks {
 		browser = System.getProperty("browser");
 		platform = System.getProperty("platform");
 
-		  if (browser == null) { browser = ConfigReader.get("browser").toLowerCase(); }  
-		  if (platform == null) { platform = ConfigReader.get("platform").toLowerCase(); }
-		 
-
 		logger.info("Starting tests with browser: {}", browser);
 		logger.info("Starting tests with Platform: {}", platform);
 
